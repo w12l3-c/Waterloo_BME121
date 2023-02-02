@@ -2,45 +2,46 @@
 
 using namespace std;
 
-struct Node{
-    int num;
-    Node* next;
-};
-
 class LinkedList{
     public:
         LinkedList();
         LinkedList(int num1);
         LinkedList(int num1, int num2);
+        ~LinkedList();
+
         
-        Node* head;
+        LinkedList* next;
+        int data;
         
-        int show();
-        int append(int num, Node* curr);
+        
+        void print();
+        void append(int num, LinkedList* curr);
 };
 
 LinkedList::LinkedList(){
-    head->num = 0;
-    head->next = NULL;
+    next = NULL;
+    data = 0;
 }
 
 
 LinkedList::LinkedList(int num1){
-    head->num = num1;
-    head->next = NULL;
+    next = NULL;
+    data = num1;
 }
 
 
 LinkedList::LinkedList(int num1, int num2){
-    Node* curr = LinkedList(num2);
-    head->num = num1;
-    head->next = curr;
+    LinkedList* curr = new LinkedList();
+    curr->data = num2;
+    curr->next = NULL;
+    next = curr;
+    data = num1;
 }
 
 LinkedList::~LinkedList(){
-    Node* curr = head;
+    LinkedList* curr = this;
     while (curr->next != NULL){
-        Node* temp = curr;
+        LinkedList* temp = curr;
         curr = curr->next;
         temp = NULL;
         delete temp;
@@ -49,30 +50,36 @@ LinkedList::~LinkedList(){
     delete curr;
 }
 
-int LinkedList::show(){
-    Node* curr = head;
+void LinkedList::print(){
+    LinkedList* curr = this;
     while (curr->next != NULL){
         cout << curr << endl;
         curr = curr->next;
     }
-    cour << curr << endl;
+    cout << curr << endl;
 }
 
-int LinkedList::append(int add, Node* curr){
+void LinkedList::append(int add, LinkedList* curr){
     if (curr == NULL){
-        return -1;
+        return;
     }
     if (curr->next != NULL){
-        return LinkedList.append(add, curr->next);
+        return append(add, curr->next);
     }
     else{
-        curr->next = LinkedList(add);
-        return 0;
+        curr->next->data = add;
+        curr->next->next = NULL;
+        return;
     }
 }
 
 
 int main(){
-
+    LinkedList* link = new LinkedList();
+    LinkedList* curr = link;
+    for (int i = 0; i < 10; i++){
+        link->append(i+1, curr);
+    }
+    link->print();
     return 0;
 }
