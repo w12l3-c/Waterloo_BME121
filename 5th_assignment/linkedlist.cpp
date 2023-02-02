@@ -3,16 +3,15 @@
 using namespace std;
 
 class LinkedList{
+    private:
+        LinkedList* next;
+        int data;
+
     public:
         LinkedList();
         LinkedList(int num1);
         LinkedList(int num1, int num2);
         ~LinkedList();
-
-        
-        LinkedList* next;
-        int data;
-        
         
         void print();
         void append(int num, LinkedList* curr);
@@ -23,12 +22,10 @@ LinkedList::LinkedList(){
     data = 0;
 }
 
-
 LinkedList::LinkedList(int num1){
     next = NULL;
     data = num1;
 }
-
 
 LinkedList::LinkedList(int num1, int num2){
     LinkedList* curr = new LinkedList();
@@ -53,10 +50,10 @@ LinkedList::~LinkedList(){
 void LinkedList::print(){
     LinkedList* curr = this;
     while (curr->next != NULL){
-        cout << curr << endl;
+        cout << curr->data << endl;
         curr = curr->next;
     }
-    cout << curr << endl;
+    cout << curr->data << endl;
 }
 
 void LinkedList::append(int add, LinkedList* curr){
@@ -67,19 +64,19 @@ void LinkedList::append(int add, LinkedList* curr){
         return append(add, curr->next);
     }
     else{
-        curr->next->data = add;
-        curr->next->next = NULL;
+        LinkedList* temp = new LinkedList(add);
+        curr->next = temp;
         return;
     }
 }
 
-
-int main(){
+int main(int argc, char** argv){
     LinkedList* link = new LinkedList();
     LinkedList* curr = link;
     for (int i = 0; i < 10; i++){
-        link->append(i+1, curr);
+        link->append(i+1, link);
     }
+    link->append(15, link);
     link->print();
     return 0;
 }
